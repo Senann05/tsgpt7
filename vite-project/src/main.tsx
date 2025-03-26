@@ -1,8 +1,8 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import Profile from './pages/Profile'
+import App from './App'
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <Profile />
+    <App />
   </StrictMode>,
 )
