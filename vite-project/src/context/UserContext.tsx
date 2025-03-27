@@ -25,6 +25,25 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     localStorage.setItem("users", JSON.stringify(users));
   }, [users]);
 
+  useEffect(()=>{
+    const fetchUsers=async()=>{
+        try{
+           const response = await fetch("https://jsonplaceholder.typicode.com/users");
+           const data: User[] = await response.json();
+
+           setUsers((prevUsers)=>{
+            const allUsers = [...prevUsers, ...data ]
+           localStorage.setItem("users", JSON.stringify(allUsers));
+           return allUsers;})
+        }catch(error){
+            console.error("404", error);
+        }
+    }
+    if(users.length === 0){
+        fetchUsers()
+    }
+  },[users.length])
+
   const addUser = (user: User) => {
     setUsers((prev) => [...prev, { ...user, id: Date.now() }]);
   };
@@ -33,8 +52,8 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     setUsers((prev) => prev.filter((u) => u.id !== id));
   };
 
-  const updateUser = (user: User) => {
-    setUsers((prev) => prev.map((u) => (u.id === user.id ? user : u)));
+  const updateUser = (updatedUser: User) => {
+    setUsers((prev) => prev.map((u) => (u.id === updatedUser.id ? updatedUser : u)));
   };
 
   return (
