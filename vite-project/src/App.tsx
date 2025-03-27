@@ -1,13 +1,14 @@
-import useTheme from "./hooks/useTheme";
+import UserList from "./components/UserList";
+import { UserProvider } from "./context/UserContext";
 
-const App=()=>{
-  const {toggleTheme, theme} = useTheme();
-
+function App(){
   return(
-    <div style={{ textAlign: "center", padding: "20px"}}>
-      <h1>edheddj</h1>
-      <button onClick={toggleTheme}>{theme==="light"? "Dark moda kec": "Light moda kec"}</button>
+    <UserProvider>
+      <div>
+        <h1>Check</h1>
+        <UserList/>
       </div>
+    </UserProvider>
   )
 }
 export default App;
